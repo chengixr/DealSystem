@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板语法</title>
+</head>
+<body>
+    <h1>模板语法学习</h1>
+    <div>{{ n1 }}</div>
+    <div>{{ n2.1 }}</div>
+    <div>
+        {% for item in n2 %}
+            <span>{{ item }}</span>
+        {% endfor %}
+    </div>
+<hr/>
+    {{ n3 }}
+    {{ n3.name }}
+    {% for k, v in n3.items %}
+        <li>{{ k }} = {{ v }}</li>
+    {% endfor %}
+
+    {% if n3.name == "承浩" %}
+        <h1>哒哒哒</h1>
+    {% else %}
+        <h1>嘟嘟嘟</h1>
+    {% endif %}
+</body>
+</html>
