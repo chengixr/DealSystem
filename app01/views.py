@@ -56,3 +56,7 @@ def login(request):
         else:
             # return HttpResponse("用户名或密码不正确")
             return render(request, 'login.html', {"error_msg": "用户名或密码不正确"})
+
+
+def register(request):
+    return render(request, 'register.html')

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+</head>
+<body>
+
+<h1>用户注册</h1>
+<form method="post">
+    <p>
+        <label for="user_id">用户编号:</label>
+        <input type="text" id="user_id" name="userid" placeholder="用户编号">
+
+        <label for="user_name">用户名称:</label>
+        <input type="text" id="user_name" name="username" placeholder="用户名称">
+    </p>
+    <p>
+        <label for="org_id">机构号:</label>
+        <input type="text" id="org_id" name="org_id">
+
+        <label for="org_name">机构名称:</label>
+        <input type="text" id="org_name" name="org_name">
+    </p>
+    <p>
+        <label for="class">用户类别:</label>
+        <select id="class" name="user_class">
+            <option value="" disabled selected hidden>请选择</option>
+            <option>前台人员</option>
+            <option>中台人员</option>
+            <option>后台人员</option>
+            <option>管理人员</option>
+        </select>
+
+        <label for="idcard">身份证号</label>
+        <input type="text" id="idcard" name="user_idcard">
+    </p>
+    <p>
+        <span>是否系统管理员:</span>
+        <label>
+            <input type="radio" id="flag" name="admin_flag">是
+            <input type="radio" id="flag" name="admin_flag">否
+        </label>
+
+        <span>启用状态</span>
+        <label>
+            <input type="radio" id="status" name="user_status">是
+        <input type="radio" id="status" name="user_status">否
+        </label>
+    </p>
+    <p>
+        <span>性别</span>
+        <label>
+            <input type="radio" id="sex" name="user_sex">男
+            <input type="radio" id="sex" name="user_sex">女
+        </label>
+    </p>
+    <p>
+        <label for="email">邮箱:</label>
+        <input type="text" id="email" name="user_email">
+
+        <label for="phone">手机号:</label>
+        <input type="text" id="phone" name="user_phone">
+    </p>
+
+</form>
+
+</body>
+</html>
