@@ -3,6 +3,7 @@ import requests
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
 import requests
+import MySQLdb
 
 
 def index(request):
@@ -45,18 +46,34 @@ def something(request):
 def login(request):
     if request.method == "GET":
         return render(request, "login.html")
+
+    # 如果是POST请求，获取用户提交的数据
+    print(request.POST)
+    username = request.POST.get("user")
+    password = request.POST.get("pwd")
+    if request.POST.get("register"):
+        return redirect("http://127.0.0.1:8000/register/")
+    if username == "root" and password == "root":
+        # return HttpResponse("登录成功")
+        return redirect("https://www.baidu.com")
+    elif username == "" and password == "":
+        return render(request, 'login.html')
     else:
-        # 如果是POST请求，获取用户提交的数据
-        print(request.POST)
-        username = request.POST.get("user")
-        password = request.POST.get("pwd")
-        if username == "root" and password == "root":
-            # return HttpResponse("登录成功")
-            return redirect("https://www.baidu.com")
-        else:
-            # return HttpResponse("用户名或密码不正确")
-            return render(request, 'login.html', {"error_msg": "用户名或密码不正确"})
+        return render(request, 'login.html', {"error_msg": "用户名或密码不正确"})
 
 
 def register(request):
-    return render(request, 'register.html')
+    if request.method == "GET":
+        return render(request, 'register.html')
+
+    user_id = request.POST.get("userid")
+    user_name = request.POST.get("username")
+    org_id = request.POST.get("org_id")
+    org_name = request.POST.get("org_name")
+    user_class = request.POST.get("user_class")
+    user_idcard = request.POST.get("user_idcard")
+    admin_flag = request.POST.get("admin_flag")
+    user_status = request.POST.get("user_status")
+    user_sex = request.POST.get("user_sex")
+    user_email = request.POST.get("user_email")
+    user_phone = request.POST.get("user_phone")

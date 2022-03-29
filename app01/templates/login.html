@@ -12,9 +12,19 @@
     {% csrf_token %}
 
     <label>
-        <input type="text" name="user" value="用户名">
-        <input type="password" name="pwd" value="用户密码">
-        <input type="submit" value="提交"/>
+        <p>
+            <label for="user">用户名:</label>
+            <input type="text" name="user" placeholder="用户名">
+        </p>
+        <p>
+            <label for="pwd">用户密码:</label>
+            <input type="password" name="pwd" placeholder="用户密码">
+        </p>
+        <p>
+            <input type="submit" name="login" value="登录"/>
+            <input type="submit" name="register" value="注册">
+        </p>
+
         <span style="color: red">
             {{ error_msg }}
         </span>

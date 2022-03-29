@@ -8,6 +8,9 @@
 
 <h1>用户注册</h1>
 <form method="post">
+
+    {% csrf_token %}
+
     <p>
         <label for="user_id">用户编号:</label>
         <input type="text" id="user_id" name="userid" placeholder="用户编号">
@@ -62,7 +65,9 @@
         <label for="phone">手机号:</label>
         <input type="text" id="phone" name="user_phone">
     </p>
-
+    <p>
+        <input type="submit" value="注册">
+    </p>
 </form>
 
 </body>
