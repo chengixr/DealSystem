@@ -2,8 +2,9 @@ import requests
 
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
+from app01 import models
 import requests
-import MySQLdb
+import time
 
 
 def index(request):
@@ -57,15 +58,21 @@ def login(request):
         # return HttpResponse("登录成功")
         return redirect("https://www.baidu.com")
     elif username == "" and password == "":
-        return render(request, 'login.html')
+        return render(request, "login.html")
     else:
-        return render(request, 'login.html', {"error_msg": "用户名或密码不正确"})
+        return render(request, "login.html", {"error_msg": "用户名或密码不正确"})
 
 
 def register(request):
     if request.method == "GET":
         return render(request, 'register.html')
 
+    find_user = models.SysUsers.objects.filter(USERID=request.POST.get("userid"))
+    if find_user:
+        return render(request, "register.html", {"error_msg": "用户已存在"})
+    print(find_user)
+
+    print(request.POST)
     user_id = request.POST.get("userid")
     user_name = request.POST.get("username")
     org_id = request.POST.get("org_id")
@@ -77,3 +84,12 @@ def register(request):
     user_sex = request.POST.get("user_sex")
     user_email = request.POST.get("user_email")
     user_phone = request.POST.get("user_phone")
+    creat_user = models.SysUsers.objects.create(
+        USERID=user_id, USERNAME=user_name, ORGID=org_id, USERCLASS=user_class, IDCARD=user_idcard,
+        ADMINFLAG=admin_flag, STATUS=user_status, SEX=user_sex, EMAIL=user_email, TELNO=user_phone,
+        CREATDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        LSTMNDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        EFFECTFLAG='E'
+    )
+    print(creat_user, type(creat_user))
+    return render(request, "login.html")

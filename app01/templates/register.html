@@ -41,21 +41,21 @@
     <p>
         <span>是否系统管理员:</span>
         <label>
-            <input type="radio" id="flag" name="admin_flag">是
-            <input type="radio" id="flag" name="admin_flag">否
+            <input type="radio" id="flag" name="admin_flag" value="Y">是
+            <input type="radio" id="flag" name="admin_flag" value="N">否
         </label>
 
         <span>启用状态</span>
         <label>
-            <input type="radio" id="status" name="user_status">是
-        <input type="radio" id="status" name="user_status">否
+            <input type="radio" id="status" name="user_status" value="1">是
+        <input type="radio" id="status" name="user_status" value="0">否
         </label>
     </p>
     <p>
         <span>性别</span>
         <label>
-            <input type="radio" id="sex" name="user_sex">男
-            <input type="radio" id="sex" name="user_sex">女
+            <input type="radio" id="sex" name="user_sex" value="男">男
+            <input type="radio" id="sex" name="user_sex" value="女">女
         </label>
     </p>
     <p>
@@ -66,7 +66,8 @@
         <input type="text" id="phone" name="user_phone">
     </p>
     <p>
-        <input type="submit" value="注册">
+        <input type="submit" name="register" value="注册">
+        <span style="color:red">{{ error_msg }}</span>
     </p>
 </form>
 
