@@ -1,6 +1,7 @@
 
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
+from django.contrib import messages
 from app01 import models
 import requests
 import time
@@ -103,3 +104,23 @@ def register(request):
 def secinfo(request):
     if request.method == "GET":
         return render(request, 'secinfo.HTML')
+
+    print(request.POST)
+    secid = request.POST.get('secid')
+    secfullname = request.POST.get('secfullname')
+    secname = request.POST.get('secname')
+    issuesubject1 = request.POST.get('ISSUESUBJECT1')
+    issuesubject2 = request.POST.get('ISSUESUBJECT2')
+    issueprice = request.POST.get('issueprice')
+    planissueamt = request.POST.get('planissueamt')
+    sec_issueamt = request.POST.get('sec_issueamt')
+    vdate = request.POST.get('vdate')
+    mdate = request.POST.get('mdate')
+    basis = request.POST.get('basis')
+    intcalrule = request.POST.get('intcalrule')
+    sec_paperir = request.POST.get('sec_paperir')
+    paycycle = request.POST.get('paycycle')
+    payrule = request.POST.get('payrule')
+    schecalrule = request.POST.get('schecalrule')
+    sec_firstpaydate = request.POST.get('sec_firstpaydate')
+    return render(request, 'secinfo.html')

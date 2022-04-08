@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<h1>债券信息新增</h1>
+<h2>债券信息新增</h2>
+<h3>基本信息</h3>
 <form method="post">
 
     {% csrf_token %}
@@ -25,7 +26,7 @@
     <p>
         <label for="ISSUESUBJECT1">债券性质：</label>
         <select id="ISSUESUBJECT1" name="ISSUESUBJECT1">
-            <option value="" disabled>请选择</option>
+            <option value="" disabled selected>请选择</option>
             <option value="GZ">国债</option>
             <option value="DF">地方政府债</option>
             <option value="CD">同业存单</option>
@@ -33,7 +34,7 @@
 
         <label for="ISSUESUBJECT2">债券记账品种：</label>
         <select id="ISSUESUBJECT2" name="ISSUESUBJECT2">
-            <option value="" disabled>请选择</option>
+            <option value="" disabled selected>请选择</option>
             <option value="GZ">国债</option>
             <option value="DF">地方债</option>
             <option value="CD">同业存单</option>
@@ -52,7 +53,7 @@
 
         <label for="returntype">还本方式：</label>
         <select id="returntype" name="returntype">
-            <option value="" disabled>请选择</option>
+            <option value="" disabled selected>请选择</option>
             <option value="O">到期一次还本</option>
             <option value="M">分期还本</option>
         </select>
@@ -72,15 +73,65 @@
         <input type="date" id="mdate" name="mdate">
     </p>
     <p>
-        <label for="basis">计息基础</label>
+        <label for="basis">计息基础：</label>
         <select id="basis" name="basis">
-            <option value="" disabled>请选择</option>
+            <option value="" disabled selected>请选择</option>
             <option value="A/A">实际/实际</option>
             <option value="A/360">实际/360</option>
             <option value="A/365">实际/365</option>
             <option value="A/365F">实际/365F</option>
         </select>
 
+        <label for="intcalrule">计息方式：</label>
+        <select id="intcalrule" name="intcalrule">
+            <option value="" disabled selected>请选择</option>
+            <option value="DIS">贴现</option>
+            <option value="IAM">利随本清式</option>
+            <option value="NPV">附息</option>
+            <option value="ZCO">零息</option>
+        </select>
+    </p>
+    <P>
+        <label for="sec_paperir">票面利率(%)：</label>
+        <input type="text" id="sec_paperir" name="sec_paperir">
+    </P>
+
+    <h3>付息计划</h3>
+
+    <p>
+        <label for="paycycle">付息周期</label>
+        <select id="paycycle" name="paycycle">
+            <option value="" disabled selected>请选择</option>
+            <option value="DSD">利随本清</option>
+            <option value="M">月</option>
+            <option value="Q">季度</option>
+            <option value="S">半年</option>
+            <option value="Y">年</option>
+        </select>
+
+        <label for="payrule">营业日准则</label>
+        <select id="payrule" name="payrule">
+            <option value="" disabled selected>请选择</option>
+            <option value="next">向后</option>
+            <option value="last">向前</option>
+            <option value="unchanged">不调整</option>
+            <option value="adjust">调整的向后</option>
+        </select>
+    </p>
+    <p>
+        <label for="schecalrule">推算方法</label>
+        <select id="schecalrule" name="schecalrule">
+            <option value="" disabled selected>请选择</option>
+            <option value="FD">首次付息日</option>
+            <option value="MB">到期日向前</option>
+            <option value="VF">起息日向后</option>
+        </select>
+
+        <label for="sec_firstpaydate">首次付息日</label>
+        <input type="date" id="sec_firstpaydate" name="sec_firstpaydate">
+    </p>
+    <p>
+        <input type="submit" name="save" value="保存">
 
     </p>
 </form>
