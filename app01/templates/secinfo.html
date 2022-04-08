@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>债券信息新增</title>
+</head>
+<body>
+
+<h1>债券信息新增</h1>
+<form method="post">
+
+    {% csrf_token %}
+
+    <p>
+        <label for="sec_id">债券代码：</label>
+        <input type="text" id="sec_id" name="secid" required="required">
+    </p>
+    <P>
+        <label for="sec_fullname">债券全称</label>
+        <input type="text" id="sec_fullname" name="secfullname">
+
+        <label for="sec_name">债券简称：</label>
+        <input type="text" id="sec_name" name="secname">
+    </P>
+    <p>
+        <label for="ISSUESUBJECT1">债券性质：</label>
+        <select id="ISSUESUBJECT1" name="ISSUESUBJECT1">
+            <option value="" disabled>请选择</option>
+            <option value="GZ">国债</option>
+            <option value="DF">地方政府债</option>
+            <option value="CD">同业存单</option>
+        </select>
+
+        <label for="ISSUESUBJECT2">债券记账品种：</label>
+        <select id="ISSUESUBJECT2" name="ISSUESUBJECT2">
+            <option value="" disabled>请选择</option>
+            <option value="GZ">国债</option>
+            <option value="DF">地方债</option>
+            <option value="CD">同业存单</option>
+        </select>
+    </p>
+    <p>
+        <label for="CCY">债券币种：</label>
+        <input type="text" id="CCY" name="CCY" value="CNY" disabled>
+
+        <label for="parvalue">券面金额(元)：</label>
+        <input type="text" id="parvalue" name="parvalue" value="100" disabled>
+    </p>
+    <p>
+        <label for="issueprice">发行价格(元/百元面值)：</label>
+        <input type="text" id="issueprice" name="issueprice" value="100">
+
+        <label for="returntype">还本方式：</label>
+        <select id="returntype" name="returntype">
+            <option value="" disabled>请选择</option>
+            <option value="O">到期一次还本</option>
+            <option value="M">分期还本</option>
+        </select>
+    </p>
+    <p>
+        <label for="planissueamt">计划发行总额(万元)：</label>
+        <input type="text" id="planissueamt" name="planissueamt">
+
+        <label for="sec_issueamt">实际发行总额(万元)：</label>
+        <input type="text" id="sec_issueamt" name="sec_issueamt">
+    </p>
+    <p>
+        <label for="vdate">起息日期</label>
+        <input type="date" id="vdate" name="vdate">
+
+        <label for="mdate">到期日期</label>
+        <input type="date" id="mdate" name="mdate">
+    </p>
+    <p>
+        <label for="basis">计息基础</label>
+        <select id="basis" name="basis">
+            <option value="" disabled>请选择</option>
+            <option value="A/A">实际/实际</option>
+            <option value="A/360">实际/360</option>
+            <option value="A/365">实际/365</option>
+            <option value="A/365F">实际/365F</option>
+        </select>
+
+
+    </p>
+</form>
+
+</body>
+</html>

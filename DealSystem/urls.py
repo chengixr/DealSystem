@@ -19,7 +19,7 @@ from app01 import views
 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('index/', views.index),
     path('user/list/', views.user_list),
     path('tpl/', views.tpl),
@@ -30,5 +30,8 @@ urlpatterns = [
     path('login/', views.login),
 
     # 用户注册
-    path('register/', views.register)
+    path('register/', views.register),
+
+    # 债券信息
+    path('secinfo/', views.secinfo),
 ]

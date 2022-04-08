@@ -1,4 +1,3 @@
-import requests
 
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
@@ -21,6 +20,11 @@ def tpl(request):
     name = "承浩"
     roles = ["程序员", "boss", "经理"]
     user_info = {"name": "承浩", "age": 24, "salary": 10000}
+    print("path:", request.path)
+    print("method:", request.method)
+    print("user:", request.user)
+    user1 = models.SysUsers.objects.filter(USERID='CHENGHAO')
+    print(user1)
     return render(request, "tpl.html", {"n1": name, "n2": roles, "n3": user_info})
 
 
@@ -50,14 +54,15 @@ def login(request):
 
     # 如果是POST请求，获取用户提交的数据
     print(request.POST)
-    username = request.POST.get("user")
-    password = request.POST.get("pwd")
+    login_id = request.POST.get("user")
+    login_pwd = request.POST.get("pwd")
     if request.POST.get("register"):
         return redirect("http://127.0.0.1:8000/register/")
-    if username == "root" and password == "root":
-        # return HttpResponse("登录成功")
+    user_login = models.SysUsers.objects.filter(USERID=login_id).filter(PASSWOED=login_pwd)
+    print(user_login)
+    if user_login:
         return redirect("https://www.baidu.com")
-    elif username == "" and password == "":
+    elif login_id == "" and login_pwd == "":
         return render(request, "login.html")
     else:
         return render(request, "login.html", {"error_msg": "用户名或密码不正确"})
@@ -85,7 +90,7 @@ def register(request):
     user_email = request.POST.get("user_email")
     user_phone = request.POST.get("user_phone")
     creat_user = models.SysUsers.objects.create(
-        USERID=user_id, USERNAME=user_name, ORGID=org_id, USERCLASS=user_class, IDCARD=user_idcard,
+        USERID=user_id, USERNAME=user_name, ORGID=org_id, PASSWOED='111111', USERCLASS=user_class, IDCARD=user_idcard,
         ADMINFLAG=admin_flag, STATUS=user_status, SEX=user_sex, EMAIL=user_email, TELNO=user_phone,
         CREATDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
         LSTMNDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
@@ -93,3 +98,8 @@ def register(request):
     )
     print(creat_user, type(creat_user))
     return render(request, "login.html")
+
+
+def secinfo(request):
+    if request.method == "GET":
+        return render(request, 'secinfo.HTML')
