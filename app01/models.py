@@ -1,4 +1,7 @@
+import time
+
 from django.db import models
+from django_comment_migrate import *
 
 
 # Create your models here.
@@ -36,9 +39,9 @@ class SecInfo(models.Model):
     INTCALRULE = models.CharField(max_length=10, help_text="计息方式")
     VDATE = models.DateTimeField(help_text="起息日")
     MDATE = models.DateTimeField(help_text="到期日")
-    TERM = models.IntegerField(help_text="债券期限")
-    TERMUNIT = models.IntegerField(help_text="债券期限单位")
-    ISSUEPRICE = models.DecimalField(max_digits=6, decimal_places=6, default=100, help_text="发行价格")
+    TERM = models.IntegerField(help_text="债券期限", null=True, blank=True)
+    TERMUNIT = models.IntegerField(help_text="债券期限单位", null=True, blank=True)
+    ISSUEPRICE = models.DecimalField(max_digits=12, decimal_places=6, default=100, help_text="发行价格")
     DENOM = models.IntegerField(default=100, help_text="债券计息单位")
     CCY = models.CharField(max_length=8, default="CNY", help_text="币种")
     PARVALUE = models.DecimalField(max_digits=26, decimal_places=4, default=100, help_text="债券面额")
@@ -51,18 +54,20 @@ class SecInfo(models.Model):
     SCHECALRULE = models.CharField(max_length=2, help_text="推算方法")
     FIRSTPAYDATE = models.CharField(max_length=12, null=True, blank=True, help_text="首次付息日")
     INTTYPE = models.CharField(max_length=2, help_text="利率类型")
-    PAPERIP = models.DecimalField(max_digits=6, decimal_places=6, help_text="票面利率")
+    PAPERIP = models.DecimalField(max_digits=12, decimal_places=6, help_text="票面利率")
     RATECODE = models.CharField(max_length=20, null=True, blank=True, help_text="基准利率")
-    FACTOR = models.DecimalField(max_digits=6, decimal_places=6, null=True, blank=True, help_text="因子 固定利率")
-    SPREADRATE = models.DecimalField(max_digits=6, decimal_places=6, null=True, blank=True, help_text="利差 固定利率")
+    FACTOR = models.DecimalField(max_digits=12, decimal_places=6, null=True, blank=True, help_text="因子 固定利率")
+    SPREADRATE = models.DecimalField(max_digits=12, decimal_places=6, null=True, blank=True, help_text="利差 固定利率")
     TOPRATEFLAG = models.CharField(max_length=1, null=True, blank=True, help_text="是否有上限利率 Y是 N否")
-    TOPRATE = models.DecimalField(max_digits=6, decimal_places=6, null=True, blank=True, help_text="上限利率")
+    TOPRATE = models.DecimalField(max_digits=12, decimal_places=6, null=True, blank=True, help_text="上限利率")
     BOTTOMRATEFLAG = models.CharField(max_length=1, null=True, blank=True, help_text="是否有下限利率 Y是 N否")
-    BOTTOMRATE = models.DecimalField(max_digits=6, decimal_places=6, null=True, blank=True, help_text="下限利率")
+    BOTTOMRATE = models.DecimalField(max_digits=12, decimal_places=6, null=True, blank=True, help_text="下限利率")
     RATEVALUETYPE = models.CharField(max_length=1, null=True, blank=True)
     RATEVALUEPERIOD = models.CharField(max_length=1, null=True, blank=True)
     RATEVALUEDAYS = models.IntegerField(null=True, blank=True)
-    INTPAYRULE = models.CharField(max_length=1, null=True, blank=True, help_text="")
+    PAYRULE = models.CharField(max_length=10, null=True, blank=True, help_text="营业日准则")
+    INTPAYRULE = models.CharField(max_length=10, null=True, blank=True, help_text="利息分配方式")
+    PLANISSUEAMT = models.DecimalField(max_digits=26, decimal_places=4, default=0, help_text="计划发行总额")
     ISSUEAMT = models.DecimalField(max_digits=26, decimal_places=4, help_text="发行总额")
     EXERCISEFLAG = models.CharField(max_length=1, default='N', help_text="是否含权")
     VIRTUALFLAG = models.CharField(max_length=1, null=True, blank=True, help_text="是否虚拟债 1是 0否")
@@ -84,3 +89,33 @@ class SecInfo(models.Model):
     class Meta:
         db_table = 'TGT_SECINFO'
         verbose_name = "债券信息表"
+
+
+class SecSchedule(models.Model):
+    SCHNO = models.IntegerField(primary_key=True, help_text='付息流水号')
+    SEQNO = models.IntegerField(help_text='债券流水号')
+    SECID = models.CharField(max_length=20, help_text='债券代码')
+    IPAYDATE = models.DateField(help_text='付息日')
+    STATDATE = models.DateField(help_text='计息开始日')
+    ENDDATE = models.DateField(help_text='计息结束日')
+    RATECODE = models.CharField(max_length=20, null=True, blank=True, help_text='利率代码')
+    INTRATE = models.DecimalField(max_digits=30, decimal_places=12, default=0, null=True, help_text='计息利率')
+    INTRATEACT = models.DecimalField(max_digits=30, decimal_places=12, default=0, null=True, help_text='计息实际利率')
+    SPREADRATE = models.DecimalField(max_digits=30, decimal_places=12, default=0, null=True, help_text='利差')
+    BASIS = models.CharField(max_length=6, null=True, help_text='计息基础')
+    RATEFIXDATE = models.DateTimeField(default=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), help_text='利率确定日')
+    PRINAMT = models.DecimalField(max_digits=30, decimal_places=12, default=0, help_text='本金总量')
+    INTPAYAMT = models.DecimalField(max_digits=30, decimal_places=12, default=0, null=True, help_text='应付利息额')
+    INTPAYAMTACT = models.DecimalField(max_digits=30, decimal_places=12, default=0, help_text='实付利息额')
+    PRINPAYAMT = models.DecimalField(max_digits=30, decimal_places=12, default=0, help_text='本金支付量')
+    CASHFLOW = models.DecimalField(max_digits=30, decimal_places=12, default=0, help_text='现金流总量')
+    PAYFLAG = models.CharField(max_length=1, default='P', help_text='付息标识 P计算 A实际付息')
+    CREATEDATE = models.DateTimeField(default=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), help_text='创建时间')
+    EFFECTFLAG = models.CharField(max_length=1, help_text='有效标识 E有效 D无效 A新建')
+    LSTMNDATE = models.DateField(null=True, help_text='更新时间')
+    LSTMNUSER = models.CharField(max_length=64, null=True, help_text='更新用户')
+    SECMARKETID = models.CharField(max_length=40, help_text='市场代码')
+
+    class Meta:
+        db_table = 'TGT_SECSCHEDULE'
+        verbose_name = '债券还本付息计划表'

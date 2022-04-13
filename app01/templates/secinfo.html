@@ -119,7 +119,7 @@
         </select>
     </p>
     <p>
-        <label for="schecalrule">推算方法</label>
+            <label for="schecalrule">推算方法</label>
         <select id="schecalrule" name="schecalrule">
             <option value="" disabled selected>请选择</option>
             <option value="FD">首次付息日</option>
@@ -129,6 +129,13 @@
 
         <label for="sec_firstpaydate">首次付息日</label>
         <input type="date" id="sec_firstpaydate" name="sec_firstpaydate">
+
+        <label for="intpayrule">利息分配方式</label>
+        <select id="intpayrule" name="intpayrule">
+            <option value="" disabled selected>请选择</option>
+            <option value="D">按实际天数分配</option>
+            <option value="J">平均分配</option>
+        </select>
     </p>
     <p>
         <input type="submit" name="save" value="保存">

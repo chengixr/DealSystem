@@ -1,9 +1,9 @@
 
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
-from django.contrib import messages
+from tkinter import *
+from tkinter import messagebox
 from app01 import models
-import requests
 import time
 
 
@@ -82,7 +82,7 @@ def register(request):
     user_id = request.POST.get("userid")
     user_name = request.POST.get("username")
     org_id = request.POST.get("org_id")
-    org_name = request.POST.get("org_name")
+    # org_name = request.POST.get("org_name")
     user_class = request.POST.get("user_class")
     user_idcard = request.POST.get("user_idcard")
     admin_flag = request.POST.get("admin_flag")
@@ -105,13 +105,20 @@ def secinfo(request):
     if request.method == "GET":
         return render(request, 'secinfo.HTML')
 
+    # 判断债券代码是否已存在
+    if models.SecInfo.objects.filter(SECID=request.POST.get('secid')):
+        root = Tk()
+        root.withdraw()
+        messagebox.showinfo('提示', '债券代码已存在')
+        root.mainloop()
+
     print(request.POST)
     secid = request.POST.get('secid')
     secfullname = request.POST.get('secfullname')
     secname = request.POST.get('secname')
     issuesubject1 = request.POST.get('ISSUESUBJECT1')
     issuesubject2 = request.POST.get('ISSUESUBJECT2')
-    issueprice = request.POST.get('issueprice')
+    # issueprice = int(request.POST.get('issueprice'))
     planissueamt = request.POST.get('planissueamt')
     sec_issueamt = request.POST.get('sec_issueamt')
     vdate = request.POST.get('vdate')
@@ -121,6 +128,32 @@ def secinfo(request):
     sec_paperir = request.POST.get('sec_paperir')
     paycycle = request.POST.get('paycycle')
     payrule = request.POST.get('payrule')
+    intpayrule = request.POST.get('intpayrule')
     schecalrule = request.POST.get('schecalrule')
     sec_firstpaydate = request.POST.get('sec_firstpaydate')
+
+    sec_info = models.SecInfo.objects.create(
+        SECID=secid,
+        FULLNAME=secfullname,
+        SECNAME=secname,
+        ISSUESUBJECT1=issuesubject1,
+        ISSUESUBJECT2=issuesubject2,
+        # ISSUEPRICE=issueprice,
+        PLANISSUEAMT=planissueamt,
+        ISSUEAMT=sec_issueamt,
+        VDATE=vdate,
+        MDATE=mdate,
+        BASIS=basis,
+        INTCALRULE=intcalrule,
+        PAPERIP=sec_paperir,
+        PAYCYCLE=paycycle,
+        PAYRULE=payrule,
+        INTPAYRULE=intpayrule,
+        SCHECALRULE=schecalrule,
+        FIRSTPAYDATE=sec_firstpaydate,
+        CREATEDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        LSTMNTDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        EFFECTFLAG='E',
+    )
+    print(sec_info, type(sec_info))
     return render(request, 'secinfo.html')
