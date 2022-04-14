@@ -3,8 +3,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from tkinter import *
 from tkinter import messagebox
-from app01 import models
+from app01 import models, method
 import time
+
 
 
 def index(request):
@@ -156,4 +157,7 @@ def secinfo(request):
         EFFECTFLAG='E',
     )
     print(sec_info, type(sec_info))
+
+    sec_schedule = method.calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, [])
+    print(sec_schedule)
     return render(request, 'secinfo.html')
