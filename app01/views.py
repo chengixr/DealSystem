@@ -1,11 +1,8 @@
-
 # Create your views here.
-from django.shortcuts import render, HttpResponse, redirect
-from tkinter import *
-from tkinter import messagebox
-from app01 import models, method
-import time
 
+import django.utils.timezone
+from django.shortcuts import render, HttpResponse, redirect
+from app01 import models, method
 
 
 def index(request):
@@ -94,8 +91,8 @@ def register(request):
     creat_user = models.SysUsers.objects.create(
         USERID=user_id, USERNAME=user_name, ORGID=org_id, PASSWOED='111111', USERCLASS=user_class, IDCARD=user_idcard,
         ADMINFLAG=admin_flag, STATUS=user_status, SEX=user_sex, EMAIL=user_email, TELNO=user_phone,
-        CREATDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
-        LSTMNDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        CREATDATE=django.utils.timezone.now(),
+        LSTMNDATE=django.utils.timezone.now(),
         EFFECTFLAG='E'
     )
     print(creat_user, type(creat_user))
@@ -107,11 +104,8 @@ def secinfo(request):
         return render(request, 'secinfo.HTML')
 
     # 判断债券代码是否已存在
-    if models.SecInfo.objects.filter(SECID=request.POST.get('secid')):
-        root = Tk()
-        root.withdraw()
-        messagebox.showinfo('提示', '债券代码已存在')
-        root.mainloop()
+    # if models.SecInfo.objects.filter(SECID=request.POST.get('secid')):
+    #     return render(request, 'secinfo.html', {"error_msg": "债券代码已存在"})
 
     print(request.POST)
     secid = request.POST.get('secid')
@@ -152,12 +146,29 @@ def secinfo(request):
         INTPAYRULE=intpayrule,
         SCHECALRULE=schecalrule,
         FIRSTPAYDATE=sec_firstpaydate,
-        CREATEDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
-        LSTMNTDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+        CREATEDATE=django.utils.timezone.now(),
+        LSTMNTDATE=django.utils.timezone.now(),
         EFFECTFLAG='E',
     )
     print(sec_info, type(sec_info))
 
     sec_schedule = method.calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, [])
     print(sec_schedule)
+    seqno = models.SecInfo.objects.filter(SECID=secid).first().SEQNO
+    print(seqno)
+    for sch_vdate, sch_mdate, sch_paydate, sch_days in sec_schedule:
+        models.SecSchedule.objects.create(
+            SEQNO=seqno,
+            SECID=secid,
+            IPAYDATE=sch_paydate,
+            STATDATE=sch_vdate,
+            ENDDATE=sch_mdate,
+            # 利率暂定票面利率
+            INTRATE=sec_paperir / 100,
+            INTRATEACT=sec_paperir / 100,
+
+            RATEFIXDATE=django.utils.timezone.now(),
+            PRINAMT=100,    # 本金总量，暂定100
+
+        )
     return render(request, 'secinfo.html')

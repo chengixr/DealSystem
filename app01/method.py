@@ -1,6 +1,5 @@
 import re
 
-schedule_list = []
 month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 
@@ -17,7 +16,7 @@ def get_month_days(month, year):
     if month == 2 and determin_leap_year(year) == 1:
         return 29
     else:
-        return month_days[month]
+        return month_days[month - 1]
 
 
 # 日期加或减n天
@@ -36,7 +35,7 @@ def change_day(date, days=1):
             year -= 1
             month = 12
         day += get_month_days(month, year)
-    return str(year) + '-' + str(month) + '-' + str(day)
+    return str(year) + '-' + str(month).rjust(2, '0') + '-' + str(day).rjust(2, '0')
 
 
 # 计算两个日期相差多少天
@@ -88,11 +87,13 @@ def calc_date(date, key=1, value=1):
         month += key
     if day > get_month_days(month, year):
         day = get_month_days(month, year)
-    return str(year) + '-' + str(month) + '-' + str(day)
+    return str(year) + '-' + str(month).rjust(2, '0') + '-' + str(day).rjust(2, '0')
 
 
 # 计算起息日和到期日的付息计划
-def calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, holidays, firstpaydate=None):
+def calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, holidays, firstpaydate=None, schedule_list=None):
+    if schedule_list is None:
+        schedule_list = []
     if re.match(r'\d{4}-\d{1,2}-\d{1,2}', vdate) is None or re.match(r'\d{4}-\d{1,2}-\d{1,2}', mdate) is None:
         return False
     days = calc_days(vdate, mdate)
@@ -108,18 +109,31 @@ def calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, holidays, firstp
         mdate_current = calc_date(vdate, 1, paycycle_days[paycycle])
         days = calc_days(vdate, mdate_current)
         schedule_list.append([vdate, mdate_current, calc_pay_date(mdate_current, payrule, holidays), days])
-        calc_schedule(mdate_current, mdate, paycycle, payrule, schecalrule, holidays)
+        calc_schedule(mdate_current, mdate, paycycle, payrule, schecalrule, holidays, schedule_list=schedule_list)
     elif schecalrule == 'MB':
         vdate_current = calc_date(mdate, -1, paycycle_days[paycycle])
         days = calc_days(vdate_current, mdate)
         schedule_list.append([vdate_current, mdate, calc_pay_date(mdate, payrule, holidays), days])
         schedule_list.append([vdate, mdate, calc_pay_date(mdate, payrule, holidays), days])
-        calc_schedule(vdate, vdate_current, paycycle, payrule, schecalrule, holidays)
+        calc_schedule(vdate, vdate_current, paycycle, payrule, schecalrule, holidays, schedule_list=schedule_list)
     elif firstpaydate is not None:
         days = calc_days(vdate, firstpaydate)
         schedule_list.append([vdate, firstpaydate, calc_pay_date(firstpaydate, payrule, holidays), days])
-        calc_schedule(firstpaydate, mdate, paycycle, payrule, schecalrule, holidays)
+        calc_schedule(firstpaydate, mdate, paycycle, payrule, schecalrule, holidays, schedule_list=schedule_list)
+    return schedule_list
 
+
+# 计算单位应付利息
+def calc_pay_amt(intcalrule, sec_paperir, basis, paycycle, days):
+    if intcalrule == 'DIS' or intcalrule == 'ZCO':
+        return 0
+    if intcalrule == 'IAM':
+        if paycycle == 'A/360':
+            return basis * days / 360
+        else:
+            return basis * days / 365
+    else:
+        pass
 
 
 

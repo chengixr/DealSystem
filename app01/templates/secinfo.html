@@ -15,6 +15,10 @@
     <p>
         <label for="sec_id">债券代码：</label>
         <input type="text" id="sec_id" name="secid" required="required">
+
+        <span style="color: red">
+            {{ error_msg }}
+        </span>
     </p>
     <P>
         <label for="sec_fullname">债券全称</label>
