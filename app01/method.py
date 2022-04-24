@@ -124,16 +124,29 @@ def calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, holidays, firstp
 
 
 # 计算单位应付利息
-def calc_pay_amt(intcalrule, sec_paperir, basis, paycycle, days):
+def calc_pay_amt(intcalrule, sec_paperir, basis, paycycle, days, intpayrule, schedule_list_count=1):
+    paycycle_days = {'M': 1, 'Q': 3, 'S': 6, 'Y': 12}
     if intcalrule == 'DIS' or intcalrule == 'ZCO':
         return 0
     if intcalrule == 'IAM':
-        if paycycle == 'A/360':
-            return basis * days / 360
+        if basis == 'A/360':
+            return sec_paperir * days / 360
         else:
-            return basis * days / 365
+            return sec_paperir * days / 365
+    elif intpayrule == 'D':
+        if basis == 'A/A':
+            return sec_paperir / paycycle_days[paycycle]
+        elif basis == 'A/360':
+            return sec_paperir * days / 360
+        else:
+            return sec_paperir * days / 365
     else:
-        pass
+        if basis == 'A/A':
+            return sec_paperir / paycycle_days[paycycle] / schedule_list_count
+        elif basis == 'A/360':
+            return sec_paperir * days / 360 / schedule_list_count
+        else:
+            return sec_paperir * days / 365 / schedule_list_count
 
 
 

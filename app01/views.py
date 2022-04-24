@@ -89,8 +89,17 @@ def register(request):
     user_email = request.POST.get("user_email")
     user_phone = request.POST.get("user_phone")
     creat_user = models.SysUsers.objects.create(
-        USERID=user_id, USERNAME=user_name, ORGID=org_id, PASSWOED='111111', USERCLASS=user_class, IDCARD=user_idcard,
-        ADMINFLAG=admin_flag, STATUS=user_status, SEX=user_sex, EMAIL=user_email, TELNO=user_phone,
+        USERID=user_id,
+        USERNAME=user_name,
+        ORGID=org_id,
+        PASSWOED='111111',
+        USERCLASS=user_class,
+        IDCARD=user_idcard,
+        ADMINFLAG=admin_flag,
+        STATUS=user_status,
+        SEX=user_sex,
+        EMAIL=user_email,
+        TELNO=user_phone,
         CREATDATE=django.utils.timezone.now(),
         LSTMNDATE=django.utils.timezone.now(),
         EFFECTFLAG='E'
