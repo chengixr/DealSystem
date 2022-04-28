@@ -1,4 +1,5 @@
 # Create your views here.
+import time
 
 import django.utils.timezone
 from django.shortcuts import render, HttpResponse, redirect
@@ -165,7 +166,11 @@ def secinfo(request):
     print(sec_schedule)
     seqno = models.SecInfo.objects.filter(SECID=secid).first().SEQNO
     print(seqno)
+    sche_list_length = len(sec_schedule)
     for sch_vdate, sch_mdate, sch_paydate, sch_days in sec_schedule:
+        # 应付利息金额
+        intpayamt = method.calc_pay_amt(intcalrule, sec_paperir, basis, paycycle, sch_days,
+                                        intpayrule, sche_list_length)
         models.SecSchedule.objects.create(
             SEQNO=seqno,
             SECID=secid,
@@ -178,6 +183,12 @@ def secinfo(request):
 
             RATEFIXDATE=django.utils.timezone.now(),
             PRINAMT=100,    # 本金总量，暂定100
-
+            INTPAYAMT=intpayamt,
+            INTPAYAMTACT=intpayamt,
+            PRINPAYAMT=100,  # 本金支付量，暂定100
+            EFFECTFLAG='E',
+            LSTMNDATE=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
+            LSTMNUSER='admin',
+            SECMARKETID=secid,
         )
     return render(request, 'secinfo.html')
