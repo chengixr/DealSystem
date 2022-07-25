@@ -27,7 +27,7 @@ urlpatterns = [
     path('something/', views.something),
 
     # 用户登录
-    path('login/', views.login),
+    path('', views.login),
 
     # 用户注册
     path('register/', views.register),
