@@ -2,35 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>资金系统</title>
 </head>
 <body>
+<div class="container" >
+    <form action="#" method="post" class="login-form">
+        {% csrf_token %}
+        <h2>用户登录</h2>
+        <input type="text" name="user" placeholder="用户名">
+        <input type="password" name="pwd" placeholder="用户密码">
+        <span>{{ error_msg }}</span>
+        <button type="submit">登录</button>
 
-<h1>用户登录</h1>
-<form method="post">
-
-    {% csrf_token %}
-
-    <label>
-        <p>
-            <label for="user">用户名:</label>
-            <input type="text" name="user" placeholder="用户名">
-        </p>
-        <p>
-            <label for="pwd">用户密码:</label>
-            <input type="password" name="pwd" placeholder="用户密码">
-        </p>
-        <p>
-            <input type="submit" name="login" value="登录"/>
-            <input type="submit" name="register" value="注册">
-        </p>
-
-        <span style="color: red">
-            {{ error_msg }}
-        </span>
-
-    </label>
-</form>
-
+        <a href="register.html">用户注册</a>
+    </form>
+</div>
 </body>
 </html>
