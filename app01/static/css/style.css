@@ -94,3 +94,91 @@ html body{
     color: red;
     text-align: left;
 }
+
+.mask{
+    background: black;
+    display: flex;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+.center{
+    width: 1100px;
+    height: 900px;
+    top:200px;
+    position: relative;
+    border: 1px solid red;
+    color: white;
+    z-index: 2;
+}
+
+.center .top-title{
+    width: 1100px;
+    height: 40px;
+    background: royalblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.center .top-title span{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.center .btn-area{
+    height: 40px;
+    background: #3d5245;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.center .btn-area button{
+    margin: 20px;
+    background: inherit;
+    border: none;
+    color: white;
+    font-size: 18px;
+}
+
+.center .base{
+    background: rgba(255,255,255, 1);
+    height: 820px;
+    opacity: 1;
+    color: black;
+    font-size: 18px;
+}
+
+.center .base .base-list{
+    width:1100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.center .base .base-list .lab-info{
+    width: 240px;
+    text-align: right;
+}
+
+.center .base .base-list .lab-input{
+    width: 275px;
+    text-align: left;
+}
+
+
+.center .base .base-list input{
+    width: 225px;
+    height: 23px;
+}
+
+.center .base .base-list select{
+    width: 233px;
+    height: 32px;
+    font-size: 16px;
+}

@@ -92,7 +92,7 @@ class SecInfo(models.Model):
 
 
 class SecSchedule(models.Model):
-    SCHNO = models.IntegerField(primary_key=True, help_text='付息流水号')
+    SCHNO = models.AutoField(primary_key=True, help_text='付息流水号')
     SEQNO = models.IntegerField(help_text='债券流水号')
     SECID = models.CharField(max_length=20, help_text='债券代码')
     IPAYDATE = models.DateField(help_text='付息日')
@@ -112,7 +112,7 @@ class SecSchedule(models.Model):
     PAYFLAG = models.CharField(max_length=1, default='P', help_text='付息标识 P计算 A实际付息')
     CREATEDATE = models.DateTimeField(default=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()), help_text='创建时间')
     EFFECTFLAG = models.CharField(max_length=1, help_text='有效标识 E有效 D无效 A新建')
-    LSTMNDATE = models.DateField(null=True, help_text='更新时间')
+    LSTMNDATE = models.DateTimeField(null=True, help_text='更新时间')
     LSTMNUSER = models.CharField(max_length=64, null=True, help_text='更新用户')
     SECMARKETID = models.CharField(max_length=40, help_text='市场代码')
 

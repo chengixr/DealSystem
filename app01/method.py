@@ -102,7 +102,8 @@ def calc_schedule(vdate, mdate, paycycle, payrule, schecalrule, holidays, firstp
 
     # 如果起息日和到期日相差小于一个月或者付息周期为利随本清，直接放到表中
     if days <= get_month_days(int(vdate[5:7]), int(vdate[:4])) or paycycle == 'DSD':
-        return schedule_list.append([vdate, mdate, calc_pay_date(mdate, payrule, holidays), days])
+        schedule_list.append([vdate, mdate, calc_pay_date(mdate, payrule, holidays), days])
+        return schedule_list
 
     paycycle_days = {'M': 1, 'Q': 3, 'S': 6, 'Y': 12}
     if schecalrule == 'VF':

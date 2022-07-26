@@ -113,9 +113,9 @@ def secinfo(request):
     if request.method == "GET":
         return render(request, 'secinfo.HTML')
 
-    # 判断债券代码是否已存在
-    # if models.SecInfo.objects.filter(SECID=request.POST.get('secid')):
-    #     return render(request, 'secinfo.html', {"error_msg": "债券代码已存在"})
+    # 校验债券代码是否重复
+    if models.SecInfo.objects.filter(SECID=request.POST.get('secid')):
+        return render(request, 'secinfo.html', {"error_msg": "债券代码已存在"})
 
     print(request.POST)
     secid = request.POST.get('secid')
@@ -169,7 +169,7 @@ def secinfo(request):
     sche_list_length = len(sec_schedule)
     for sch_vdate, sch_mdate, sch_paydate, sch_days in sec_schedule:
         # 应付利息金额
-        intpayamt = method.calc_pay_amt(intcalrule, sec_paperir, basis, paycycle, sch_days,
+        intpayamt = method.calc_pay_amt(intcalrule, float(sec_paperir), basis, paycycle, sch_days,
                                         intpayrule, sche_list_length)
         models.SecSchedule.objects.create(
             SEQNO=seqno,
@@ -178,8 +178,8 @@ def secinfo(request):
             STATDATE=sch_vdate,
             ENDDATE=sch_mdate,
             # 利率暂定票面利率
-            INTRATE=sec_paperir / 100,
-            INTRATEACT=sec_paperir / 100,
+            INTRATE=float(sec_paperir) / 100,
+            INTRATEACT=float(sec_paperir) / 100,
 
             RATEFIXDATE=django.utils.timezone.now(),
             PRINAMT=100,    # 本金总量，暂定100
