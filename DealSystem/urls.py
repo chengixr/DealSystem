@@ -34,4 +34,7 @@ urlpatterns = [
 
     # 债券信息
     path('secinfo/', views.secinfo),
+
+    # 债券交易
+    path('main/', views.main),
 ]

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <nav class="sysmenu">
+        <header>
+            <div class="sysmenu__imgbox">
+                <span class="sysmenu__imgbox--image">
+                    <img src="../static/img/IMG_头像1.JPG" alt="">
+                </span>
+                <div class="sysmenu__imgbox--text">
+                    <span class="name">Phoenix</span>
+                    <span class="profession">Web Developer</span>
+                </div>
+            </div>
+            <i class="bx bx-chevron-left sysmenu__imgbox--toggle" ></i>
+        </header>
+
+        <div class="menu-bar">
+            <ul class="menu-bar__link">
+                <li class="menu-bar__search">
+                    <i class='bx bx-search menu-bar--icon' ></i>
+                    <input type="text" placeholder="搜索">
+                </li>
+
+                <li class="menu-bar__nav-link">
+                    <i class="bx bx-home-alt menu-bar--icon"></i>
+                    <span>债券资料管理</span>
+                </li>
+
+                <li class="menu-bar__nav-link">
+                    <i class="bx bx-home-alt menu-bar--icon"></i>
+                    <span>债券交易</span>
+                </li>
+
+                <li class="menu-bar__nav-link">
+                    <i class="bx bx-home-alt menu-bar--icon"></i>
+                    <span>债券还本付息</span>
+                </li>
+
+                <li class="menu-bar__nav-link">
+                    <i class="bx bx-home-alt menu-bar--icon"></i>
+                    <span>债券计提摊销查询</span>
+                </li>
+
+                <li class="menu-bar__nav-link">
+                    <i class="bx bx-home-alt menu-bar--icon"></i>
+                    <span>债券公允价值变动查询</span>
+                </li>
+            </ul>
+
+            <ul class="menu-bar__bottom-content">
+                <a href="">
+                    <li class="menu-bar__nav-link">
+                        <i class="bx bx-log-out menu-bar--icon"></i>
+                        <span>退出</span>
+                    </li>
+                </a>
+            </ul>
+        </div>
+
+    </nav>
+
+    <div class="dealpage">
+        <div class="dealpage__dealheader">
+            <h2>债券交易</h2>
+        </div>
+        <div class="dealpage__searchbox">
+            <h3>查询</h3>
+            <div class="searchbox__line">
+                <div class="searchbox__molecular">
+                    <span class="searchbox__molecular--text">债券代码：</span>
+                    <input type="text" class="searchbox__molecular--input">
+                </div>
+                <div class="searchbox__molecular">
+                    <span class="searchbox__molecular--text">债券名称：</span>
+                    <input type="text" class="searchbox__molecular--input">
+                </div>
+                <div class="searchbox__molecular">
+                    <span class="searchbox__molecular--text">交易方向：</span>
+                    <input type="text" class="searchbox__molecular--input">
+                </div>
+            </div>
+            <div class="searchbox__line">
+                <div class="searchbox__molecular">
+                    <span class="searchbox__molecular--text">操作类型：</span>
+                    <input type="text" class="searchbox__molecular--input">
+                </div>
+                <div class="searchbox__molecular">
+                    <span class="searchbox__molecular--text">流程状态：</span>
+                    <input type="text" class="searchbox__molecular--input">
+                </div>
+                <div class="searchbox__molecular">
+                    <button type="submit">查询</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dealpage__button-list">
+            <button type="button" class="dealpage__button-list--button">新增</button>
+            <button type="button" class="dealpage__button-list--button">编辑</button>
+            <button type="button" class="dealpage__button-list--button">删除</button>
+        </div>
+
+        <div class="dealpage__dealdata">
+            <table border="1" class="dealdata__table">
+                <tr>
+                    <th>流程状态</th>
+                    <th>机构号</th>
+                    <th>机构名称</th>
+                    <th>交易编号</th>
+                    <th>交易日期</th>
+                    <th>交易方向</th>
+                    <th>交易对手</th>
+                    <th>债券代码</th>
+                    <th>债券名称</th>
+                    <th>券面总额(万元)</th>
+                    <th>清算速度</th>
+                    <th>结算日期</th>
+                    <th>净价(元/百元面值)</th>
+                    <th>单位应计利息(元)</th>
+                    <th>全价(元/百元面值)</th>
+                    <th>到期收益率(%)</th>
+                    <th>行权收益率(%)</th>
+                    <th>交易金额(元)</th>
+                    <th>应计利息总额(元)</th>
+                    <th>结算金额(元)</th>
+                    <th>结算方式</th>
+                    <th>交易费用(元)</th>
+                    <th>清结算费用(元)</th>
+                    <th>本方交易员</th>
+                    <th>投资账户</th>
+                    <th>金融资产分类</th>
+                </tr>
+                <tr>
+                    <td>流程状态</td>
+                    <td>机构号</td>
+                    <td>机构名称</td>
+                    <td>交易编号</td>
+                    <td>交易日期</td>
+                    <td>交易方向</td>
+                    <td>交易对手</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="#" async defer></script>
+</body>
+</html>

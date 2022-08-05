@@ -61,7 +61,7 @@ def login(request):
     user_login = models.SysUsers.objects.filter(USERID=login_id).filter(PASSWOED=login_pwd)
     print(user_login)
     if user_login:
-        return redirect("https://www.baidu.com")
+        return render(request, "main.html")
     elif login_id == "" and login_pwd == "":
         return render(request, "login.html")
     else:
@@ -192,3 +192,9 @@ def secinfo(request):
             SECMARKETID=secid,
         )
     return render(request, 'secinfo.html')
+
+
+def main(request):
+    if method == 'GET':
+        return render(request, 'main.html')
+
